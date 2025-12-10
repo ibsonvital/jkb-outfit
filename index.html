@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>JKB Outfit - Catálogo de Roupas</title>
+    <style>
+        /* Cor Dourada Suave Consistente */
+        :root {
+            --primary-color: #CCAA66; /* Dourado Suave */
+            --secondary-color: #A3854F; /* Dourado mais escuro para hover */
+            --background-dark: #121212; /* Preto escuro sólido */
+            --text-light: #ffffff;
+            --highlight-green: #28a745;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            /* Fundo Preto Sólido */
+            background: var(--background-dark); 
+            color: var(--text-light);
+            min-height: 100vh;
+        }
+        header {
+            position: relative;
+            text-align: center;
+            padding: 20px;
+            background: rgba(0,0,0,0.9);
+        }
+        /* ESTILO: Link de acesso administrativo no canto superior (Dourado) */
+        .access-link {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #000; /* Texto escuro no fundo dourado */
+            background-color: var(--primary-color);
+            padding: 8px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .access-link:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        header img { height: 100px; }
+        h1 { color: var(--primary-color); } /* Título Dourado */
+        .insta-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            display: block;
+            margin-top: 5px;
+        }
+        .container { display: flex; gap: 20px; padding: 20px; }
+        .menu { flex: 2; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .item { 
+            background: rgba(25, 25, 25, 0.9); /* Card mais escuro */
+            padding: 15px; 
+            border-radius: 12px; 
+            text-align: center; 
+            border: 1px solid var(--primary-color); /* Borda Dourada */
+        }
+        .item img { width: 100%; border-radius: 10px; height: 250px; object-fit: cover; }
+        .item h2 { color: var(--primary-color); margin: 10px 0 5px; }
+        .item p { margin: 0 0 8px; }
+        .descricao { font-size: 14px; color: #ccc; margin-bottom: 10px; }
+        .item select { width: 90%; padding: 8px; margin-bottom: 10px; border-radius: 6px; border: none; color: #000; }
+        .item button { 
+            padding: 10px; 
+            background: var(--primary-color); /* Botão Dourado */
+            color: #000; /* Texto Preto no Botão */
+            border: none; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: bold; 
+        }
+        .item button:hover { background: var(--secondary-color); }
+        
+        /* Carrinho */
+        .cart { 
+            flex: 1; 
+            background: rgba(0,0,0,0.95); 
+            padding: 15px; 
+            border-radius: 12px; 
+            position: sticky; 
+            top: 20px; 
+            align-self: flex-start; 
+            height: fit-content; 
+        }
+        .cart h2 { color: var(--primary-color); }
+        .cart ul { list-style: none; padding: 0; }
+        .cart li { margin: 8px 0; display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); padding: 6px 8px; border-radius: 6px; flex-wrap: wrap; font-size: 14px; }
+        .controls { display: flex; align-items: center; gap: 5px; }
+        .qty-btn { 
+            background: var(--primary-color); /* Botão Qtd Dourado */
+            color: #000;
+            border: none; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-weight: bold;
+        }
+        .qty-btn:hover { background: var(--secondary-color); }
+        .remove-btn { background: #dc3545; border: none; color: #fff; padding: 4px 8px; border-radius: 6px; cursor: pointer; font-size: 12px; }
+        .remove-btn:hover { background: #b52a37; }
+        .formulario { margin-top: 15px; }
+        textarea, input, select { width: 100%; padding: 10px; margin: 5px 0; border-radius: 6px; border: none; resize: none; color: #000; }
+        button.finalizar { 
+            margin-top: 10px; width: 100%; padding: 12px; background: var(--highlight-green); /* Verde para Finalizar */
+            color: #fff; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; 
+        }
+        button.finalizar:hover { background: #004d00; }
+        .admin-link { display: none; }
+        
+        /* Estilos para mostrar/esconder o campo de endereço */
+        .endereco-field {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="admin_login.html" class="access-link">Estoque/Comandas</a>
+
+        <img src="jkb.jpeg" alt="Logo JKB Outfit"> 
+        <h1>JKB Outfit - Catálogo 🛍️✨</h1>
+        <p>Escolha seus looks e finalize o pedido!</p>
+        <a class="insta-link" href="https://www.instagram.com/jkb_outfit021/" target="_blank">Siga a gente no Instagram: @jkb_outfit021</a>
+    </header>
+
+    <div class="container">
+        <section class="menu">
+
+            <div class="item">
+                <img src="camiseta.jpg" alt="Camiseta Básica">
+                <h2>Camiseta Básica Oversized</h2>
+                <p>R$ 69,90</p>
+                <p class="descricao">Camiseta premium 100% algodão, caimento moderno.</p>
+                
+                <select id="camiseta-basica-tamanho">
+                    <option value="Tamanho M">Tamanho M</option>
+                    <option value="Tamanho G">Tamanho G</option>
+                    <option value="Tamanho GG">Tamanho GG</option>
+                </select>
+                <select id="camiseta-basica-cor">
+                    <option value="Cor Preto">Cor Preto</option>
+                    <option value="Cor Branco">Cor Branco</option>
+                    <option value="Cor Cinza">Cor Cinza</option>
+                </select>
+                <button onclick="addToCartRoupa('Camiseta Básica Oversized', 69.90, 'camiseta-basica-tamanho', 'camiseta-basica-cor')">Adicionar</button>
+            </div>
+
+            <div class="item">
+                <img src="calca.jpg" alt="Calça Jeans Slim">
+                <h2>Calça Jeans Slim Fit</h2>
+                <p>R$ 149,90</p>
+                <p class="descricao">Jeans com elastano, corte ajustado e moderno.</p>
+                
+                <select id="calca-jeans-tamanho">
+                    <option value="Tam 38">Tam 38</option>
+                    <option value="Tam 40">Tam 40</option>
+                    <option value="Tam 42">Tam 42</option>
+                    <option value="Tam 44">Tam 44</option>
+                </select>
+                <select id="calca-jeans-cor">
+                    <option value="Cor Azul Escuro">Cor Azul Escuro</option>
+                    <option value="Cor Azul Claro">Cor Azul Claro</option>
+                </select>
+                <button onclick="addToCartRoupa('Calça Jeans Slim Fit', 149.90, 'calca-jeans-tamanho', 'calca-jeans-cor')">Adicionar</button>
+            </div>
+
+            <div class="item">
+                <img src="moletom.jpg" alt="Moletom Unissex">
+                <h2>Moletom Canguru JKB</h2>
+                <p>R$ 99,90</p>
+                <p class="descricao">Moletom flanelado, perfeito para o frio.</p>
+                
+                <select id="moletom-tamanho">
+                    <option value="Tamanho P">Tamanho P</option>
+                    <option value="Tamanho M">Tamanho M</option>
+                    <option value="Tamanho G">Tamanho G</option>
+                </select>
+                <select id="moletom-cor">
+                    <option value="Cor Vinho">Cor Vinho</option>
+                    <option value="Cor Preto">Cor Preto</option>
+                    <option value="Cor Bege">Cor Bege</option>
+                </select>
+                <button onclick="addToCartRoupa('Moletom Canguru JKB', 99.90, 'moletom-tamanho', 'moletom-cor')">Adicionar</button>
+            </div>
+
+            <div class="item">
+                <img src="oculos.jpg" alt="Óculos de Sol">
+                <h2>Óculos de Sol Casual</h2>
+                <p>R$ 50,00</p>
+                <p class="descricao">Proteção UV400, estilo moderno.</p>
+                <button onclick="addToCart('Óculos de Sol Casual', 50.00)">Adicionar</button>
+            </div>
+            
+        </section>
+
+        <aside class="cart">
+            <h2>🛒 Carrinho de Compras</h2>
+            <ul id="cart-items"></ul>
+            <p>Subtotal: R$ <span id="cart-subtotal">0.00</span></p>
+            <p id="entrega-info">Taxa de Entrega: R$ <span id="taxa-entrega">0.00</span></p>
+            <p><strong>Total: R$ <span id="cart-total">0.00</span></strong></p>
+            
+            <div class="formulario">
+                
+                <select id="tipo-entrega" onchange="renderCart()" required>
+                    <option value="">Tipo de Serviço *</option>
+                    <option value="retirada">Retirada (Sem custo)</option>
+                    <option value="entrega">Entrega (+R$ 5,00)</option>
+                </select>
+                
+                <input type="text" id="vendedor" placeholder="Nome do Vendedor" required> 
+                <input type="text" id="nome" placeholder="Seu nome" required>
+                <input type="tel" id="telefone" placeholder="Telefone do Cliente (DDD + Número)" required> 
+                
+                <input type="text" id="endereco" placeholder="Endereço de entrega completo" class="endereco-field"> 
+                
+                <textarea id="observacao" rows="3" placeholder="Observações (ex: presente, embrulhar, ponto de referência...)"></textarea>
+                
+                <select id="pagamento" onchange="toggleTroco()" required>
+                    <option value="">Forma de pagamento *</option>
+                    <option value="Pix">Pix</option>
+                    <option value="Cartão">Cartão (Débito/Crédito)</option>
+                    <option value="Dinheiro">Dinheiro</option>
+                </select>
+                <input type="number" id="valorPago" placeholder="Precisa de troco para quanto? (ex: 100)" style="display:none;">
+            </div>
+            <button class="finalizar" onclick="finalizarPedido()">Finalizar Pedido (Enviar Comanda)</button>
+        </aside>
+    </div>
+
+    <script>
+        let cart = [];
+        const DELIVERY_FEE_VALUE = 5.00; // Taxa de entrega fixa
+        const API_URL = '/api/pedidos'; 
+
+        function addToCart(item, price) {
+            const existing = cart.find(prod => prod.item === item);
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({item, price, qty: 1});
+            }
+            renderCart();
+        }
+
+        function addToCartRoupa(item, price, sizeSelectId, colorSelectId) {
+            const size = document.getElementById(sizeSelectId).value;
+            const color = document.getElementById(colorSelectId).value;
+            const itemNameDetails = `${item} (${size}, ${color})`; 
+
+            const existing = cart.find(prod => prod.item === itemNameDetails);
+
+            if (existing) {
+                existing.qty++;
+            } else {
+                cart.push({
+                    item: itemNameDetails,
+                    price: price,
+                    qty: 1,
+                });
+            }
+            renderCart();
+        }
+
+        function changeQty(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+            renderCart();
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            renderCart();
+        }
+
+        function renderCart() {
+            const cartItems = document.getElementById("cart-items");
+            const cartSubtotalSpan = document.getElementById("cart-subtotal");
+            const cartTotalSpan = document.getElementById("cart-total");
+            const taxaEntregaSpan = document.getElementById("taxa-entrega");
+            const entregaInfoDiv = document.getElementById("entrega-info");
+            const tipoEntrega = document.getElementById("tipo-entrega").value;
+            const enderecoField = document.getElementById("endereco");
+
+            cartItems.innerHTML = "";
+            let subtotal = 0;
+            let taxaEntrega = 0;
+
+            cart.forEach((prod, index) => {
+                const li = document.createElement("li");
+                li.innerHTML = `${prod.item} - R$ ${(prod.price * prod.qty).toFixed(2)}
+                    <div class="controls">
+                        <button class="qty-btn" onclick="changeQty(${index}, -1)">➖</button>
+                        <span>${prod.qty}</span>
+                        <button class="qty-btn" onclick="changeQty(${index}, 1)">➕</button>
+                        <button class="remove-btn" onclick="removeFromCart(${index})">Remover</button>
+                    </div>`;
+                cartItems.appendChild(li);
+                subtotal += prod.price * prod.qty;
+            });
+
+            // Lógica para calcular a taxa de entrega
+            if (tipoEntrega === 'entrega') {
+                taxaEntrega = DELIVERY_FEE_VALUE;
+                enderecoField.style.display = 'block'; // Mostra o endereço
+                enderecoField.required = true; // Torna o endereço obrigatório
+            } else {
+                taxaEntrega = 0.00;
+                enderecoField.style.display = 'none'; // Esconde o endereço
+                enderecoField.required = false; // Remove a obrigatoriedade
+                enderecoField.value = ''; // Limpa o valor para não ir lixo no pedido
+            }
+
+            const total = subtotal + taxaEntrega;
+
+            cartSubtotalSpan.textContent = subtotal.toFixed(2);
+            taxaEntregaSpan.textContent = taxaEntrega.toFixed(2);
+            entregaInfoDiv.style.display = (tipoEntrega === '') ? 'none' : 'block'; // Esconde se a opção não foi escolhida
+            cartTotalSpan.textContent = total.toFixed(2);
+        }
+
+        function toggleTroco() {
+            const pagamento = document.getElementById("pagamento").value;
+            const valorPago = document.getElementById("valorPago");
+            valorPago.style.display = (pagamento === "Dinheiro") ? "block" : "none";
+        }
+
+        function finalizarPedido() {
+            if (cart.length === 0) {
+                alert("Seu carrinho está vazio!");
+                return;
+            }
+            
+            const tipoEntrega = document.getElementById("tipo-entrega").value;
+            const vendedor = document.getElementById("vendedor").value.trim();
+            const telefone = document.getElementById("telefone").value.trim();
+            const nome = document.getElementById("nome").value.trim();
+            const endereco = document.getElementById("endereco").value.trim();
+            const pagamento = document.getElementById("pagamento").value;
+            const observacao = document.getElementById("observacao").value;
+            const valorPago = parseFloat(document.getElementById("valorPago").value || 0);
+            
+            // Verificação de campos obrigatórios
+            if (!tipoEntrega || !vendedor || !nome || !telefone || !pagamento) {
+                alert("Por favor, preencha o Tipo de Serviço, Vendedor, Nome, Telefone e Forma de pagamento.");
+                return;
+            }
+
+            // Se for entrega, o endereço é obrigatório
+            if (tipoEntrega === 'entrega' && !endereco) {
+                alert("Você selecionou 'Entrega'. Por favor, preencha o Endereço de entrega completo.");
+                return;
+            }
+
+            const subtotal = cart.reduce((acc, prod) => acc + prod.price * prod.qty, 0);
+            const taxaEntrega = (tipoEntrega === 'entrega') ? DELIVERY_FEE_VALUE : 0.00;
+            const total = subtotal + taxaEntrega;
+
+            const dadosPedido = {
+                tipoEntrega: tipoEntrega, // Adicionado
+                taxaEntrega: taxaEntrega.toFixed(2), // Adicionado
+                vendedor: vendedor,
+                cliente: nome,
+                telefone: telefone,
+                endereco: (tipoEntrega === 'entrega') ? endereco : 'Retirada na Loja', // Ajustado
+                formaPagamento: pagamento,
+                observacoes: observacao,
+                total: total.toFixed(2),
+                itens: cart.map(prod => ({
+                    nome_produto: prod.item,
+                    quantidade: prod.qty,
+                    preco_unitario: prod.price
+                }))
+            };
+            
+            // Tenta enviar para o servidor (vai falhar em ambiente local, gerando o backup para WhatsApp)
+            fetch(API_URL, {
+                method: 'POST', 
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dadosPedido) 
+            })
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); 
+                }
+                alert("Erro ao salvar a comanda no servidor. Envie por WhatsApp como backup.");
+                throw new Error('Fallback to WhatsApp');
+            })
+            .then(data => {
+                alert(`Comanda #${data.id_comanda || 'Novo'} registrada com sucesso! A loja já recebeu seu pedido.`);
+                cart = []; renderCart();
+            })
+            .catch((error) => {
+                // FALLBACK: Envia por WhatsApp se a comunicação com o servidor falhar
+                if (error.message === 'Fallback to WhatsApp' || error.message.includes('Failed to fetch')) {
+                    enviarPorWhatsApp(dadosPedido, taxaEntrega);
+                }
+            });
+        }
+        
+        function enviarPorWhatsApp(dados, taxaEntrega) {
+            
+            let mensagem = `*🛍️ Pedido JKB OUTFIT - BACKUP*%0A---------------------------%0A`;
+            dados.itens.forEach(prod => {
+                mensagem += `- ${prod.nome_produto} x${prod.quantidade} (R$ ${(prod.preco_unitario * prod.quantidade).toFixed(2)})%0A`;
+            });
+
+            mensagem += `%0A*TOTAL DOS PRODUTOS: R$ ${(parseFloat(dados.total) - taxaEntrega).toFixed(2)}*%0A`;
+            if (taxaEntrega > 0) {
+                 mensagem += `➕ Taxa de Entrega: R$ ${taxaEntrega.toFixed(2)}%0A`;
+            }
+            mensagem += `*TOTAL GERAL: R$ ${dados.total}*%0A`;
+            mensagem += `---------------------------%0A*Dados para Serviço*%0A`;
+            mensagem += `🚗 Tipo: *${dados.tipoEntrega.toUpperCase()}*%0A`;
+            mensagem += `🧑‍💻 Vendedor: *${dados.vendedor}*%0A`;
+            mensagem += `👤 Cliente: ${dados.cliente}%0A`;
+            mensagem += `📞 Telefone: ${dados.telefone}%0A`; 
+            mensagem += `📍 ${dados.tipoEntrega === 'entrega' ? 'Entregar em:' : 'Local de Retirada:'} ${dados.endereco}%0A`;
+            mensagem += `📝 Obs: ${dados.observacoes || 'Nenhuma'}%0A`;
+            mensagem += `💳 Forma de pagamento: *${dados.formaPagamento}*%0A`;
+            
+            const valorPagoInput = document.getElementById("valorPago");
+            if (dados.formaPagamento === 'Dinheiro' && valorPagoInput.value) {
+                const troco = parseFloat(valorPagoInput.value);
+                mensagem += `💵 Troco para: R$ ${troco.toFixed(2)}%0A`;
+            }
+
+            const whatsappNumber = '5521970946410'; 
+            const url = `https://wa.me/${whatsappNumber}?text=${mensagem}`;
+            window.open(url, "_blank");
+            
+            // Limpa o formulário e carrinho
+            cart = []; renderCart();
+            document.getElementById("vendedor").value = '';
+            document.getElementById("nome").value = '';
+            document.getElementById("telefone").value = '';
+            document.getElementById("endereco").value = '';
+            document.getElementById("observacao").value = '';
+            document.getElementById("pagamento").value = '';
+            document.getElementById("tipo-entrega").value = '';
+            
+        }
+        // Garante que o carrinho seja renderizado corretamente ao carregar a página
+        window.onload = renderCart;
+    </script>
+</body>
+</html>

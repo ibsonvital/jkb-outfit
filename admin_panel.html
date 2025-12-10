@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>JKB Outfit - Painel de Controle</title>
+    <style>
+        /* Cor Dourada Suave Consistente */
+        :root {
+            --primary-color: #CCAA66; 
+            --secondary-color: #A3854F;
+            --background-dark: #121212;
+            --highlight-red: #dc3545;
+        }
+
+        body {
+            font-family: Arial, sans-serif; margin: 0; padding: 20px; 
+            background: var(--background-dark); 
+            color: #fff;
+        }
+        h1 { color: var(--primary-color); }
+        .dashboard {
+            background: rgba(0, 0, 0, 0.8); padding: 20px; border-radius: 12px; 
+            border: 1px solid var(--primary-color);
+        }
+        .dashboard h2 {
+            color: var(--primary-color);
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+        .dashboard button {
+            padding: 10px 20px; border: none; border-radius: 6px;
+            cursor: pointer; font-weight: bold; margin-right: 15px; margin-bottom: 15px;
+            color: #fff;
+        }
+        /* Botão Exportar Excel (Dourado) */
+        #export-excel-btn {
+            background: var(--primary-color);
+            color: #000;
+        }
+        #export-excel-btn:hover {
+            background: var(--secondary-color);
+        }
+        /* Botão Sair (Vermelho) */
+        .logout-btn { 
+            background: var(--highlight-red); 
+        }
+        .logout-btn:hover { background: #b52a37; }
+
+        .pedido-list {
+            margin-top: 20px; max-height: 400px; overflow-y: auto; 
+            padding-top: 10px;
+        }
+        .comanda {
+            background: #2a2a2a; padding: 15px; margin-bottom: 10px; border-radius: 8px;
+            border-left: 5px solid var(--primary-color); 
+        }
+        .comanda strong { color: var(--primary-color); }
+        .comanda ul { list-style: disc; margin-left: 20px; padding: 5px 0; font-size: 14px; }
+        .alerta-backend { color: var(--primary-color); font-weight: bold; }
+        
+        /* Novo estilo para exibir a mensagem de que não há pedidos */
+        #no-orders-message {
+            color: #ccc;
+            padding: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+        // Lógica de Proteção Front-end: Se não logou, redireciona.
+        if (localStorage.getItem('adminLoggedIn') !== 'true') {
+            alert('Acesso negado. Por favor, faça login.');
+            window.location.href = 'admin_login.html';
+        }
+
+        function logout() {
+            localStorage.removeItem('adminLoggedIn');
+            window.location.href = 'admin_login.html';
+        }
+
+        function gerarExcel() {
+            alert('Atenção! A geração e download do arquivo Excel PRECISA ser feita pelo seu SERVIDOR (Back-end) para funcionar de verdade com os dados reais.');
+            console.log('Simulando geração de relatório Excel...');
+        }
+        
+        // Função que será usada para carregar os dados reais
+        function carregarComandas() {
+            const pedidoListDiv = document.getElementById('pedidos-reais-container');
+            
+            // ⚠️ ATENÇÃO: ESTE É O PONTO QUE VOCÊ PRECISA CONECTAR AO SEU BACK-END REAL.
+            
+            /*
+            // Exemplo de como seria a chamada real (DESCOMENTE ISSO AO TER UM SERVIDOR)
+            fetch('/api/comandas') 
+                .then(response => response.json())
+                .then(comandas => {
+                    pedidoListDiv.innerHTML = ''; // Limpa antes de popular
+                    if (comandas.length === 0) {
+                        pedidoListDiv.innerHTML = '<p id="no-orders-message">Nenhuma comanda em aberto no momento.</p>';
+                    } else {
+                        comandas.forEach(comanda => {
+                            // Código para construir o HTML da comanda real
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar comandas:', error);
+                    pedidoListDiv.innerHTML = '<p class="alerta-backend">Erro ao conectar com o servidor para buscar comandas.</p>';
+                });
+            */
+            
+            // Simulação de NENHUM pedido (Para mostrar que as simulações sumiram)
+            pedidoListDiv.innerHTML = '<p id="no-orders-message">Nenhuma comanda em aberto no momento.</p>';
+            
+        }
+
+        // Carrega as comandas ao abrir o painel
+        window.onload = carregarComandas;
+    </script>
+
+    <div class="dashboard">
+        <h1>Painel de Comandas e Estoque</h1>
+        
+        <button id="export-excel-btn" onclick="gerarExcel()">Exportar Excel (Relatório)</button>
+        <button class="logout-btn" onclick="logout()">Sair</button>
+        
+        <div class="pedido-list">
+            <h2>Comandas Finalizadas</h2>
+            <p class="alerta-backend">⚠️ Os pedidos reais (salvos pelo botão "Finalizar Pedido" no catálogo) precisam ser buscados do seu **SERVIDOR/BANCO DE DADOS** aqui.</p>
+            
+            <div id="pedidos-reais-container">
+                </div>
+            
+        </div>
+    </div>
+</body>
+</html>
